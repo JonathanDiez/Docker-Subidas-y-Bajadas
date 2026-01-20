@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Docker Web Básico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Uso básico de Docker para aplicaciones web</h1>
+    <p>Apache, Nginx y PHP + Apache</p>
+</header>
+
+<main>
+
+<section>
+    <h2>📦 Apache con HTML, CSS y JavaScript</h2>
+    <p>Este contenedor sirve archivos web estáticos usando Apache.</p>
+
+<pre>
+Estructura:
+web-docker/
+├── Dockerfile
+└── web/
+    ├── index.html
+    ├── style.css
+    └── script.js
+</pre>
+
+<pre>
+Dockerfile:
+FROM httpd:2.4
+COPY web/ /usr/local/apache2/htdocs/
+</pre>
+
+<pre>
+Comandos:
+docker build -t web-apache .
+docker run -d -p 8080:80 web-apache
+</pre>
+</section>
+
+<section>
+    <h2>⚡ Nginx con HTML, CSS y JavaScript</h2>
+    <p>Nginx es un servidor web muy ligero y rápido, ideal para contenido estático.</p>
+
+<pre>
+Dockerfile:
+FROM nginx:alpine
+COPY web/ /usr/share/nginx/html/
+</pre>
+
+<pre>
+Comandos:
+docker build -t web-nginx .
+docker run -d -p 8080:80 web-nginx
+</pre>
+</section>
+
+<section>
+    <h2>🐘 PHP + Apache</h2>
+    <p>Este contenedor permite ejecutar código PHP directamente en el servidor.</p>
+
+<pre>
+Estructura:
+web-docker/
+├── Dockerfile
+└── web/
+    ├── index.php
+    └── style.css
+</pre>
+
+<pre>
+Dockerfile:
+FROM php:8.2-apache
+COPY web/ /var/www/html/
+</pre>
+
+<pre>
+Comandos:
+docker build -t web-php-apache .
+docker run -d -p 8080:80 web-php-apache
+</pre>
+</section>
+
+<section>
+    <h2>🔐 Subir imagen a Docker Hub</h2>
+    <p>Para compartir la imagen es necesario iniciar sesión y subirla al repositorio.</p>
+
+<pre>
+docker login
+docker tag web-apache usuario/web-apache:1.0
+docker push usuario/web-apache:1.0
+</pre>
+</section>
+
+<section>
+    <h2>🚫 Problemas con puertos</h2>
+    <p>Si el puerto 8080 está ocupado:</p>
+
+<pre>
+docker ps
+docker stop ID_CONTENEDOR
+</pre>
+</section>
+
+</main>
+
+<footer>
+    <p>Práctica básica de Docker – Servidores Web</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
