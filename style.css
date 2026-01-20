@@ -1,42 +1,98 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f6f8;
-    color: #333;
+:root{
+  --bg:#f7f9fb;
+  --card:#ffffff;
+  --accent:#0d47a1;
+  --muted:#666;
 }
 
-header {
-    background-color: #0d47a1;
-    color: white;
-    padding: 20px;
-    text-align: center;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:#222;
+  line-height:1.4;
 }
 
-main {
-    padding: 20px;
-    max-width: 1000px;
-    margin: auto;
+.site-header{
+  background:var(--accent);
+  color:white;
+  padding:24px;
+  text-align:center;
+}
+.site-header .lead{
+  margin:8px 0 0;
+  opacity:0.95;
+}
+.controls{
+  margin-top:12px;
+}
+.controls button{
+  margin:4px;
+  padding:8px 12px;
+  border-radius:6px;
+  border:none;
+  cursor:pointer;
+  background:white;
+  color:var(--accent);
+  font-weight:600;
+}
+.container{
+  max-width:980px;
+  margin:20px auto;
+  padding:0 12px 40px;
 }
 
-section {
-    background: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 6px;
+.panel{
+  background:var(--card);
+  border-radius:8px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 6px 18px rgba(13,71,161,0.06);
 }
 
-h2 {
-    color: #0d47a1;
+h2{ color:var(--accent); margin-top:0 }
+
+details{
+  margin:10px 0;
+  border-radius:6px;
+  padding:10px;
+  background:#fbfdff;
+  border:1px solid #e8eef8;
+}
+details[open]{
+  background:#ffffff;
+}
+summary{
+  font-weight:700;
+  cursor:pointer;
+  list-style:none;
+  outline:none;
+}
+summary::-webkit-details-marker{display:none}
+
+.detail-body{
+  margin-top:10px;
+  padding-left:6px;
 }
 
-pre {
-    background: #eee;
-    padding: 10px;
-    overflow-x: auto;
+pre{
+  background:#f1f5f9;
+  padding:12px;
+  border-radius:6px;
+  overflow:auto;
+  font-size:13px;
+  line-height:1.5;
+}
+.note{
+  margin-top:8px;
+  font-size:14px;
+  color:var(--muted);
 }
 
-footer {
-    text-align: center;
-    padding: 15px;
-    background: #ddd;
+.site-footer{
+  text-align:center;
+  margin-top:24px;
+  color:var(--muted);
+  font-size:14px;
 }
