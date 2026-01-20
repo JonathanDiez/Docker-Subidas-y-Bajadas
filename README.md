@@ -18,9 +18,9 @@ Este contenedor sirve archivos web estáticos usando Apache.
 web-docker/
 ├── Dockerfile
 └── web/
-├── index.html
-├── style.css
-└── script.js
+    ├── index.html
+    ├── style.css
+    └── script.js
 
 
 ### Dockerfile
@@ -68,8 +68,9 @@ Este contenedor permite ejecutar código PHP directamente en el servidor.
 web-docker/
 ├── Dockerfile
 └── web/
-├── index.php
-└── style.css
+    ├── index.html
+    ├── style.css
+    └── script.js
 
 
 ### Dockerfile
