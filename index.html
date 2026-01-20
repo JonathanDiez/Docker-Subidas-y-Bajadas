@@ -1,116 +1,388 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Docker Web Básico</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Docker: Apache · Nginx · PHP+Apache — Tutoriales</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="site-header">
+    <h1>Introducción a Docker para servidores web</h1>
+    <p class="lead">Tres tutoriales independientes y paso a paso: Apache (HTML/CSS/JS), Nginx (HTML/CSS/JS) y PHP + Apache.</p>
+    <div class="controls">
+      <button id="expand-all" aria-controls="content">Expandir todo</button>
+      <button id="collapse-all" aria-controls="content">Contraer todo</button>
+    </div>
+  </header>
 
-<header>
-    <h1>Uso básico de Docker para aplicaciones web</h1>
-    <p>Apache, Nginx y PHP + Apache</p>
-</header>
+  <main id="content" class="container">
 
-<main>
+    <section class="panel">
+      <h2>Inicio</h2>
+      <p>Esta página explica, con desplegables, cómo crear imágenes Docker para servidores web básicos y cómo subirlas a Docker Hub. Elige el tutorial que necesites y sigue los pasos en orden.</p>
+    </section>
 
-<section>
-    <h2>📦 Apache con HTML, CSS y JavaScript</h2>
-    <p>Este contenedor sirve archivos web estáticos usando Apache.</p>
+    <!-- ---------- TUTORIAL APACHE ---------- -->
+    <section class="panel">
+      <h2>🐳 Tutorial: Apache + HTML/CSS/JS</h2>
 
-<pre>
-Estructura:
-web-docker/
+      <details>
+        <summary>1️⃣ Requisitos</summary>
+        <div class="detail-body">
+          <ul>
+            <li>Docker instalado</li>
+            <li>Cuenta en Docker Hub</li>
+            <li>Terminal / consola</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>2️⃣ Estructura del proyecto</summary>
+        <div class="detail-body">
+<pre><code>web-docker/
 ├── Dockerfile
 └── web/
     ├── index.html
     ├── style.css
-    └── script.js
-</pre>
+    └── script.js</code></pre>
+        </div>
+      </details>
 
-<pre>
-Dockerfile:
-FROM httpd:2.4
-COPY web/ /usr/local/apache2/htdocs/
-</pre>
+      <details>
+        <summary>3️⃣ Crear los archivos web</summary>
+        <div class="detail-body">
+<p><strong>web/index.html</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Docker Apache&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hola desde Docker 🐳&lt;/h1&gt;
+  &lt;button onclick="saludar()"&gt;Click&lt;/button&gt;
 
-<pre>
-Comandos:
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<p><strong>web/style.css</strong></p>
+<pre><code>body {
+  font-family: Arial;
+  background: #f0f0f0;
+  text-align: center;
+}</code></pre>
+
+<p><strong>web/script.js</strong></p>
+<pre><code>function saludar() {
+  alert("Funciona JavaScript 🚀");
+}</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>4️⃣ Crear el Dockerfile (Apache)</summary>
+        <div class="detail-body">
+<pre><code>FROM httpd:2.4
+
+COPY web/ /usr/local/apache2/htdocs/</code></pre>
+
+<p class="note"><strong>Explicación rápida:</strong><br>httpd:2.4 → imagen oficial de Apache. Copiamos la web al directorio público de Apache.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>5️⃣ Construir la imagen</summary>
+        <div class="detail-body">
+<pre><code>Desde la carpeta web-docker:
 docker build -t web-apache .
-docker run -d -p 8080:80 web-apache
-</pre>
-</section>
 
-<section>
-    <h2>⚡ Nginx con HTML, CSS y JavaScript</h2>
-    <p>Nginx es un servidor web muy ligero y rápido, ideal para contenido estático.</p>
+Verificar:
+docker images</code></pre>
+        </div>
+      </details>
 
-<pre>
-Dockerfile:
-FROM nginx:alpine
-COPY web/ /usr/share/nginx/html/
-</pre>
+      <details>
+        <summary>6️⃣ Ejecutar el contenedor</summary>
+        <div class="detail-body">
+<pre><code>docker run -d -p 8080:80 web-apache
 
-<pre>
-Comandos:
-docker build -t web-nginx .
-docker run -d -p 8080:80 web-nginx
-</pre>
-</section>
+Abrir en el navegador:
+http://localhost:8080
 
-<section>
-    <h2>🐘 PHP + Apache</h2>
-    <p>Este contenedor permite ejecutar código PHP directamente en el servidor.</p>
+✅ Si ves la página → está correcto</code></pre>
+        </div>
+      </details>
 
-<pre>
-Estructura:
-web-docker/
+      <details>
+        <summary>7️⃣ Iniciar sesión en Docker Hub</summary>
+        <div class="detail-body">
+<pre><code>docker login</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>8️⃣ Etiquetar la imagen para Docker Hub</summary>
+        <div class="detail-body">
+<p>Formato obligatorio: <code>usuario/nombre:tag</code></p>
+<pre><code>docker tag web-apache tuusuario/web-apache:1.0</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>9️⃣ Subir la imagen a Docker Hub</summary>
+        <div class="detail-body">
+<pre><code>docker push tuusuario/web-apache:1.0
+
+🎉 Ya está publicada</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>🔟 Probar desde cualquier PC</summary>
+        <div class="detail-body">
+<pre><code>docker pull tuusuario/web-apache:1.0
+docker run -p 8080:80 tuusuario/web-apache:1.0</code></pre>
+        </div>
+      </details>
+
+    </section>
+
+    <!-- ---------- TUTORIAL NGINX ---------- -->
+    <section class="panel">
+      <h2>🐳 Tutorial: Nginx + HTML/CSS/JS</h2>
+
+      <details>
+        <summary>1️⃣ Estructura del proyecto</summary>
+        <div class="detail-body">
+<pre><code>web-ejemplo/
+├── Dockerfile
+└── web/
+    ├── index.html
+    ├── style.css
+    └── script.js</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>2️⃣ Archivos web</summary>
+        <div class="detail-body">
+<p><strong>web/index.html</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Docker NGINX&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hola desde NGINX 🐳&lt;/h1&gt;
+  &lt;button onclick="saludar()"&gt;Click&lt;/button&gt;
+
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<p><strong>web/style.css</strong></p>
+<pre><code>body {
+  font-family: Arial;
+  background-color: #e0f7fa;
+  text-align: center;
+}</code></pre>
+
+<p><strong>web/script.js</strong></p>
+<pre><code>function saludar() {
+  alert("NGINX con Docker funcionando 🚀");
+}</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>3️⃣ Dockerfile para Nginx (y referencias)</summary>
+        <div class="detail-body">
+<p><strong>Nginx (archivo Dockerfile)</strong></p>
+<pre><code>FROM nginx:alpine
+
+COPY web/ /usr/share/nginx/html/</code></pre>
+
+<p><strong>PHP+Apache (referencia)</strong></p>
+<pre><code>FROM php:8.2-apache
+
+COPY web/ /var/www/html/</code></pre>
+
+<p><strong>Apache (referencia)</strong></p>
+<pre><code>FROM httpd:2.4
+
+COPY web/ /usr/local/apache2/htdocs/</code></pre>
+
+<p class="note"><strong>Explicación:</strong> nginx:alpine → imagen oficial ligera. /usr/share/nginx/html → carpeta pública de Nginx.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>4️⃣ Construir la imagen</summary>
+        <div class="detail-body">
+<pre><code>docker build -t web-nginx .</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>5️⃣ Ejecutar el contenedor</summary>
+        <div class="detail-body">
+<pre><code>docker run -d -p 8080:80 web-nginx
+
+Abrir en el navegador:
+http://localhost:8080</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>6️⃣ Login en Docker Hub</summary>
+        <div class="detail-body">
+<pre><code>docker login</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>7️⃣ Etiquetar la imagen</summary>
+        <div class="detail-body">
+<pre><code>docker tag web-nginx tuusuario/web-nginx:1.0</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>8️⃣ Subir a Docker Hub</summary>
+        <div class="detail-body">
+<pre><code>docker push tuusuario/web-nginx:1.0</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>9️⃣ Probar desde otro equipo</summary>
+        <div class="detail-body">
+<pre><code>docker pull tuusuario/web-nginx:1.0
+docker run -p 8080:80 tuusuario/web-nginx:1.0</code></pre>
+        </div>
+      </details>
+
+    </section>
+
+    <!-- ---------- TUTORIAL PHP+APACHE ---------- -->
+    <section class="panel">
+      <h2>🐳 Tutorial: PHP + Apache</h2>
+
+      <details>
+        <summary>1️⃣ Estructura del proyecto</summary>
+        <div class="detail-body">
+<pre><code>php-apache/
 ├── Dockerfile
 └── web/
     ├── index.php
-    └── style.css
-</pre>
+    └── style.css</code></pre>
+        </div>
+      </details>
 
-<pre>
-Dockerfile:
-FROM php:8.2-apache
-COPY web/ /var/www/html/
-</pre>
+      <details>
+        <summary>2️⃣ Crear los archivos web</summary>
+        <div class="detail-body">
+<p><strong>web/index.php</strong></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;PHP con Docker&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;PHP + Apache en Docker 🐳&lt;/h1&gt;
 
-<pre>
-Comandos:
-docker build -t web-php-apache .
-docker run -d -p 8080:80 web-php-apache
-</pre>
-</section>
+    &lt;?php
+        echo "&lt;p&gt;La fecha de hoy es: " . date("d/m/Y") . "&lt;/p&gt;";
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
 
-<section>
-    <h2>🔐 Subir imagen a Docker Hub</h2>
-    <p>Para compartir la imagen es necesario iniciar sesión y subirla al repositorio.</p>
+<p><strong>web/style.css</strong></p>
+<pre><code>body {
+    font-family: Arial;
+    background-color: #f5f5f5;
+    text-align: center;
+}</code></pre>
+        </div>
+      </details>
 
-<pre>
-docker login
-docker tag web-apache usuario/web-apache:1.0
-docker push usuario/web-apache:1.0
-</pre>
-</section>
+      <details>
+        <summary>3️⃣ Dockerfile (PHP + Apache)</summary>
+        <div class="detail-body">
+<pre><code>FROM php:8.2-apache
 
-<section>
-    <h2>🚫 Problemas con puertos</h2>
-    <p>Si el puerto 8080 está ocupado:</p>
+COPY web/ /var/www/html/</code></pre>
 
-<pre>
-docker ps
-docker stop ID_CONTENEDOR
-</pre>
-</section>
+<p class="note"><strong>Explicación típica de examen:</strong> php:8.2-apache → imagen oficial con PHP y Apache integrados. /var/www/html → directorio raíz de Apache.</p>
+        </div>
+      </details>
 
-</main>
+      <details>
+        <summary>4️⃣ Construir la imagen</summary>
+        <div class="detail-body">
+<pre><code>Desde la carpeta php-apache:
+docker build -t php-apache .</code></pre>
+        </div>
+      </details>
 
-<footer>
-    <p>Práctica básica de Docker – Servidores Web</p>
-</footer>
+      <details>
+        <summary>5️⃣ Ejecutar el contenedor</summary>
+        <div class="detail-body">
+<pre><code>docker run -d -p 8080:80 php-apache
 
-<script src="script.js"></script>
+Abrir en el navegador:
+http://localhost:8080
+
+✅ Si ves la fecha → PHP funciona correctamente</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>6️⃣ Iniciar sesión en Docker Hub</summary>
+        <div class="detail-body">
+<pre><code>docker login</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>7️⃣ Etiquetar la imagen</summary>
+        <div class="detail-body">
+<pre><code>docker tag php-apache tuusuario/php-apache:1.0</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>8️⃣ Subir la imagen a Docker Hub</summary>
+        <div class="detail-body">
+<pre><code>docker push tuusuario/php-apache:1.0
+
+🎉 Imagen publicada</code></pre>
+        </div>
+      </details>
+
+      <details>
+        <summary>9️⃣ Probar desde otro equipo</summary>
+        <div class="detail-body">
+<pre><code>docker pull tuusuario/php-apache:1.0
+docker run -p 8080:80 tuusuario/php-apache:1.0</code></pre>
+        </div>
+      </details>
+
+    </section>
+
+    <footer class="site-footer">
+      <p>Material didáctico — flujo: crear → construir → ejecutar → publicar. Selecciona el tutorial que necesites.</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
